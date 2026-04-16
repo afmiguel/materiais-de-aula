@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas de Numeração — Roteiro Completo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:#F7F6F1; --bg2:#EEECEA; --bg3:#E4E2DE;
+  --text:#1A1A18; --text2:#525250; --text3:#929290;
+  --accent:#0D6B52; --accent2:#1D9E75; --accent-bg:#E2F5EE;
+  --coral:#C84E28; --coral-bg:#FBF0EC;
+  --amber:#A86A10; --amber-bg:#FBF3E4;
+  --purple:#5A4AB0; --purple-bg:#EFEDFC;
+  --blue:#2270B8; --blue-bg:#EAF1FB;
+  --teal:#1D9E75; --teal-bg:#E2F5EE;
+  --border:rgba(0,0,0,.10); --border2:rgba(0,0,0,.06);
+  --mono:'IBM Plex Mono','Courier New',monospace;
+  --serif:'IBM Plex Serif',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#181817; --bg2:#222220; --bg3:#2C2C2A;
+    --text:#E8E8E2; --text2:#A0A09A; --text3:#606058;
+    --accent:#1D9E75; --accent2:#2ABFB4; --accent-bg:#082E22;
+    --coral:#E8724A; --coral-bg:#3A1A10;
+    --amber:#D08020; --amber-bg:#2E1E05;
+    --purple:#9080E8; --purple-bg:#1E1A38;
+    --blue:#60A0E0; --blue-bg:#101E30;
+    --teal:#1D9E75; --teal-bg:#082E22;
+    --border:rgba(255,255,255,.10); --border2:rgba(255,255,255,.05);
+  }
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--serif);font-size:16px;line-height:1.8;color:var(--text);background:var(--bg);max-width:860px;margin:0 auto;padding:0 1.5rem 5rem}
+a{color:var(--accent)}
+sup,sub{font-size:.72em;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em} sub{bottom:-.25em}
+
+/* ── Header ── */
+header{padding:3rem 0 2rem;border-bottom:2px solid var(--accent);margin-bottom:2.5rem}
+.course-tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+h1{font-size:2rem;font-weight:500;line-height:1.2}
+.doc-meta{font-family:var(--sans);font-size:13px;color:var(--text3);margin-top:.4rem}
+
+/* ── TOC ── */
+nav.toc{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:3rem}
+.toc-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.75rem}
+.toc ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.toc a{font-family:var(--sans);font-size:14px;color:var(--text2);text-decoration:none;display:flex;align-items:baseline;gap:10px;padding:2px 0}
+.toc a:hover{color:var(--accent)}
+.toc a .n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px}
+
+/* ── Sections ── */
+section{margin-bottom:3.5rem;padding-top:.5rem}
+h2{font-size:1.25rem;font-weight:500;margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px}
+.sn{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:400}
+h3{font-family:var(--sans);font-size:1rem;font-weight:500;margin:1.5rem 0 .6rem;color:var(--text)}
+p{margin-bottom:.8rem}
+ul,ol{padding-left:1.5rem;margin-bottom:.8rem}
+li{margin-bottom:.25rem}
+code{font-family:var(--mono);font-size:.88em;background:var(--bg2);padding:1px 5px;border-radius:4px;color:var(--accent)}
+
+/* ── Tables ── */
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:14px}
+th{background:var(--bg2);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+/* ── Formula blocks ── */
+.formula{background:var(--bg2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:1rem 1.25rem;margin:1rem 0;font-family:var(--mono);font-size:15px;line-height:2.1}
+.formula .fl{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:.3rem}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.9em;line-height:1.25;margin:0 4px}
+.frac .nm{border-bottom:1px solid currentColor;padding:0 4px 2px}
+.frac .dn{padding:2px 4px 0}
+.step{display:flex;align-items:center;gap:10px;margin-bottom:2px;flex-wrap:wrap}
+.arr{color:var(--text3);font-size:.85em}
+
+/* ── Callout boxes ── */
+.box{border-radius:var(--r);padding:.9rem 1.1rem;margin:1rem 0;font-family:var(--sans);font-size:14px;line-height:1.65}
+.box-teal{background:var(--accent-bg);border:1px solid rgba(29,158,117,.2)}
+.box-coral{background:var(--coral-bg);border:1px solid rgba(200,78,40,.2)}
+.box-amber{background:var(--amber-bg);border:1px solid rgba(168,106,16,.2)}
+.box-blue{background:var(--blue-bg);border:1px solid rgba(34,112,184,.2)}
+.box strong{font-family:var(--sans)}
+
+/* ── Video links ── */
+.vlinks{margin:.75rem 0;display:flex;flex-wrap:wrap;gap:6px}
+.vlink{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;color:var(--coral);text-decoration:none;background:var(--coral-bg);padding:3px 10px;border-radius:20px;border:1px solid rgba(200,78,40,.15)}
+.vlink:hover{text-decoration:underline}
+.vlink::before{content:"▶";font-size:9px}
+
+/* ── Diagram containers ── */
+.diagram{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:1rem 1.25rem;margin:1.25rem 0}
+.dtitle{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.75rem}
+
+/* ── Interactive clock ── */
+.clk-btn{padding:5px 16px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.clk-btn.on{background:var(--accent);color:#fff;border-color:transparent}
+#clk-ib{margin:10px 0 0;padding:10px 14px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;color:var(--text2);min-height:36px;line-height:1.7;font-family:var(--sans);background:var(--bg3)}
+
+/* ── Operators grid ── */
+.opg{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;margin:1rem 0}
+.opc{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 12px}
+.opc .op{font-size:18px;font-weight:500;color:var(--accent);font-family:var(--mono)}
+.opc .ol{font-size:11px;color:var(--text3);font-family:var(--sans);margin-top:2px}
+
+/* ── Exercises ── */
+.exl{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px}
+.exl li{display:flex;align-items:baseline;gap:12px;padding:8px 12px;border-radius:6px}
+.exl li:nth-child(even){background:var(--bg2)}
+.exl li .el{font-family:var(--mono);font-size:12px;color:var(--accent);min-width:22px;font-weight:500;flex-shrink:0}
+.exl li .ec{font-family:var(--mono);font-size:15px;flex:1}
+.exl li.prog{font-family:var(--sans);font-size:14px;background:var(--amber-bg) !important;border:1px solid rgba(168,106,16,.15);margin-top:4px}
+.exl li.prog .ec{font-family:var(--sans);font-size:14px}
+
+/* ── Blockquote ── */
+blockquote{border-left:3px solid var(--border);margin:1.25rem 0;padding:.5rem 1.25rem;color:var(--text2);font-style:italic}
+blockquote footer{font-style:normal;font-size:13px;font-family:var(--sans);color:var(--text3);margin-top:.4rem}
+
+/* ── Print ── */
+@media print{
+  body{max-width:100%;padding:1cm 2cm}
+  .vlink::after{content:" (" attr(href) ")";font-size:10px;font-style:normal}
+  nav.toc,section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="course-tag">Engenharia de Computação · PUCPR</div>
+  <h1>Sistemas de Numeração</h1>
+  <div class="doc-meta">Roteiro completo de aula — versão reorganizada</div>
+</header>
+
+<nav class="toc">
+  <div class="toc-label">Conteúdo</div>
+  <ol>
+    <li><a href="#s1"><span class="n">01</span>Introdução</a></li>
+    <li><a href="#s2"><span class="n">02</span>Como os Computadores Entendem as Informações</a></li>
+    <li><a href="#s3"><span class="n">03</span>Limites de Números Binários (não sinalizados)</a></li>
+    <li><a href="#s4"><span class="n">04</span>Número Mínimo de Bits para Representar um Inteiro</a></li>
+    <li><a href="#s5"><span class="n">05</span>Inteiros Binários Sinalizados</a></li>
+    <li><a href="#s6"><span class="n">06</span>Aritmética em Base Binária</a></li>
+    <li><a href="#s7"><span class="n">07</span>Operações Bitwise</a></li>
+    <li><a href="#s8"><span class="n">08</span>Propriedades dos Números Binários</a></li>
+    <li><a href="#s9"><span class="n">09</span>Grandezas em Computação</a></li>
+    <li><a href="#s10"><span class="n">10</span>Exercícios</a></li>
+    <li><a href="#s11"><span class="n">11</span>Citações</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════ S1 ══ -->
+<section id="s1">
+  <h2><span class="sn">01</span>Introdução</h2>
+
+  <p><em>(Escreve o 7 no quadro.)</em> É um número! O que é um número?</p>
+  <p>É uma <strong>representação</strong> de uma quantidade, distância ou ordem.</p>
+  <p><em>Colocar uma carinha e perguntar: é um número?</em></p>
+
+  <h3>O que é sistema?</h3>
+  <p>Partes com propósito comum formando um todo. As partes podem ser subsistemas.</p>
+
+  <h3>Objetivos</h3>
+  <ul>
+    <li>Levar o estudante a separar o que é <em>quantidade</em> e o que é <em>número</em>.</li>
+    <li>Compreender como foi criada a representação numérica computacional.</li>
+    <li>Quais as razões de esta ser a representação numérica usada no computador.</li>
+  </ul>
+
+  <h3>Como são formados os números?</h3>
+  <ul>
+    <li>Conjunto de símbolos</li>
+    <li>Símbolos associados a quantidades</li>
+    <li>Regra de formação</li>
+  </ul>
+
+  <div class="vlinks">
+    <a class="vlink" href="http://bit.ly/scfcont">Contador decádico de madeira</a>
+    <a class="vlink" href="http://bit.ly/scfcontbin">Contador binário de madeira</a>
+    <a class="vlink" href="http://bit.ly/scfhist">Matemática Rio — história da numeração</a>
+  </div>
+
+  <h3>Tópicos de conversão</h3>
+  <ul>
+    <li><strong>Notação:</strong> índices de base — ex: 100111<sub>2</sub>, 1AFB<sub>16</sub></li>
+    <li><strong>Base n → Decimal:</strong> expansão em potência de n</li>
+    <li><strong>Decimal → Base n:</strong> divisões sucessivas por n</li>
+    <li><strong>Fracionários (ex: 0,5625):</strong> multiplicações sucessivas pela base</li>
+    <li><strong>Binário ↔ Hexadecimal:</strong> agrupamento de 4 bits</li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════ S2 ══ -->
+<section id="s2">
+  <h2><span class="sn">02</span>Como os Computadores Entendem as Informações</h2>
+
+  <div class="vlinks">
+    <a class="vlink" href="http://bit.ly/scfbininfo">Como computadores entendem informações</a>
+  </div>
+
+  <p>Conjuntos matemáticos são <strong>infinitos e abstratos</strong>; o computador trabalha com representações <strong>finitas e em bits</strong>. Cada conjunto tem um tipo computacional correspondente:</p>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>Conjunto matemático</th><th>Exemplos</th><th>Tipo computacional</th><th>Notação</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>ℕ</strong> Naturais</td><td>0, 1, 2, 3 …</td><td>Inteiro não sinalizado</td><td><code>unsigned</code> (X)</td></tr>
+        <tr><td><strong>ℤ</strong> Inteiros</td><td>… −2, −1, 0, 1, 2 …</td><td>Inteiro sinalizado</td><td><code>signed</code> (O)</td></tr>
+        <tr><td><strong>ℚ</strong> Racionais</td><td>½, ¾, −0,25 …</td><td>Ponto flutuante</td><td><code>float / double</code> (D)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Number line SVG -->
+  <div class="diagram">
+    <div class="dtitle">Reta numérica — abrangência de cada tipo em memória</div>
+    <svg viewBox="0 0 680 130" width="100%" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ℚ / float: dashed purple, both ends open -->
+      <line x1="46" y1="28" x2="582" y2="28" stroke="#7F77DD" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <path d="M54 23L46 28L54 33" fill="none" stroke="#7F77DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M574 23L582 28L574 33" fill="none" stroke="#7F77DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="38" y="32" text-anchor="end" font-size="14" fill="#7F77DD" font-style="italic" font-family="serif">ℚ</text>
+      <text x="592" y="32" font-size="11" fill="#7F77DD" font-family="sans-serif" dominant-baseline="central">float</text>
+
+      <!-- ℤ / signed: solid blue, both ends -->
+      <line x1="56" y1="53" x2="582" y2="53" stroke="#378ADD" stroke-width="1.5"/>
+      <path d="M64 48L56 53L64 58" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M574 48L582 53L574 58" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="57" text-anchor="end" font-size="14" fill="#378ADD" font-style="italic" font-family="serif">ℤ</text>
+      <text x="592" y="57" font-size="11" fill="#378ADD" font-family="sans-serif" dominant-baseline="central">signed</text>
+
+      <!-- ℕ / unsigned: teal, starts at 0 (x=316), right end open -->
+      <!-- ticks -3..3 step 84 from x=64 → x(-3)=64 x(0)=316 x(3)=568 -->
+      <line x1="316" y1="75" x2="582" y2="75" stroke="#1D9E75" stroke-width="1.5"/>
+      <path d="M574 70L582 75L574 80" fill="none" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="316" cy="75" r="3.5" fill="#1D9E75"/>
+      <text x="304" y="79" text-anchor="end" font-size="14" fill="#1D9E75" font-style="italic" font-family="serif">ℕ</text>
+      <text x="592" y="79" font-size="11" fill="#1D9E75" font-family="sans-serif" dominant-baseline="central">unsigned</text>
+
+      <!-- Axis -->
+      <line x1="55" y1="103" x2="586" y2="103" stroke="currentColor" stroke-width="1" opacity=".2"/>
+      <path d="M578 99L586 103L578 107" fill="none" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Ticks: x(-3)=64 step=84 → -3=64,-2=148,-1=232,0=316,1=400,2=484,3=568 -->
+      <g stroke="currentColor" opacity=".2" stroke-width="1">
+        <line x1="64"  y1="99" x2="64"  y2="107"/>
+        <line x1="148" y1="99" x2="148" y2="107"/>
+        <line x1="232" y1="99" x2="232" y2="107"/>
+        <line x1="316" y1="99" x2="316" y2="107"/>
+        <line x1="400" y1="99" x2="400" y2="107"/>
+        <line x1="484" y1="99" x2="484" y2="107"/>
+        <line x1="568" y1="99" x2="568" y2="107"/>
+      </g>
+      <g text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" opacity=".4">
+        <text x="64"  y="122">−3</text>
+        <text x="148" y="122">−2</text>
+        <text x="232" y="122">−1</text>
+        <text x="316" y="122">0</text>
+        <text x="400" y="122">1</text>
+        <text x="484" y="122">2</text>
+        <text x="568" y="122">3</text>
+      </g>
+
+      <!-- Vertical ref at 0 -->
+      <line x1="316" y1="20" x2="316" y2="108" stroke="currentColor" opacity=".1" stroke-width="1" stroke-dasharray="3 3"/>
+    </svg>
+  </div>
+
+  <p>Inteiros (int) representam um <strong>número fixo de combinações</strong>; ponto flutuante (float/double) representa também a parte fracionária, ao custo de precisão finita.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════ S3 ══ -->
+<section id="s3">
+  <h2><span class="sn">03</span>Limites de Números Binários (não sinalizados)</h2>
+
+  <p>Com 1 bit registramos apenas dois valores: 0 ou 1. Quantas combinações são possíveis com <em>Nb</em> bits?</p>
+
+  <h3>Legenda</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Símbolo</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><td><code>Nb</code></td><td>Número de bits</td></tr>
+        <tr><td><code>Nc</code></td><td>Número de combinações possíveis com Nb bits</td></tr>
+        <tr><td><code>Vmin</code></td><td>Valor mínimo representável = 0</td></tr>
+        <tr><td><code>Vmax</code></td><td>Valor máximo representável com Nb bits</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Exemplos</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>Nb</th><th>Nc = 2<sup>Nb</sup></th><th>Vmin</th><th>Vmax = 2<sup>Nb</sup> − 1</th><th>Padrões (mín. e máx.)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2 bits</td><td>4</td><td>0</td><td>3</td><td><code>00</code> … <code>11</code></td></tr>
+        <tr><td>3 bits</td><td>8</td><td>0</td><td>7</td><td><code>000</code> … <code>111</code></td></tr>
+        <tr><td>7 bits</td><td>128</td><td>0</td><td>127</td><td><code>0000000</code> … <code>1111111</code></td></tr>
+        <tr><td>16 bits</td><td>65.536</td><td>0</td><td>65.535</td><td><code>0000…0</code> … <code>1111…1</code></td></tr>
+        <tr><td>32 bits</td><td>4.294.967.296</td><td>0</td><td>4.294.967.295</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula">
+    <span class="fl">Fórmulas gerais — inteiro não sinalizado</span>
+    Nc &nbsp;= 2<sup>Nb</sup><br>
+    Vmin = 0<br>
+    Vmax = Nc − 1 &nbsp;= 2<sup>Nb</sup> − 1
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S4 ══ -->
+<section id="s4">
+  <h2><span class="sn">04</span>Número Mínimo de Bits para Representar um Inteiro</h2>
+
+  <p>Dado um número decimal N, quantos bits são necessários para representá-lo em binário sem sinal?</p>
+
+  <h3>Raciocínio por exemplos</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>N (decimal)</th><th>Binário</th><th>Bits mínimos</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td><code>0</code></td><td>1 &nbsp;<em>(por intuição — zero precisa de ao menos 1 bit)</em></td></tr>
+        <tr><td>1</td><td><code>1</code></td><td>1</td></tr>
+        <tr><td>2</td><td><code>10</code><sub>2</sub></td><td>2</td></tr>
+        <tr><td>8</td><td><code>1000</code><sub>2</sub></td><td>4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Derivação para N = 8</h3>
+  <div class="formula">
+    <div class="step">8 ≤ Vmax</div>
+    <div class="step">8 ≤ 2<sup>n</sup> − 1</div>
+    <div class="step">8 + 1 ≤ 2<sup>n</sup></div>
+    <div class="step">log(9) ≤ log(2<sup>n</sup>) = n · log 2</div>
+    <div class="step">
+      n ≥ <span class="frac"><span class="nm">log 9</span><span class="dn">log 2</span></span>
+      = log<sub>2</sub>(9) ≈ 3,17
+      <span class="arr">→</span> <strong>4 bits</strong>
+    </div>
+  </div>
+
+  <h3>Fórmula geral — inteiro não sinalizado</h3>
+  <div class="formula">
+    <span class="fl">Dado N inteiro positivo, o número mínimo de bits é:</span>
+    <div class="step">
+      Nb ≥
+      <span class="frac"><span class="nm">log(N + 1)</span><span class="dn">log 2</span></span>
+      = log<sub>2</sub>(N + 1)
+    </div>
+    <span style="font-size:.85em;color:var(--text3)">Arredondar para cima (teto ⌈·⌉) quando o resultado não for inteiro.</span>
+  </div>
+
+  <h3>Exemplo — N = 30.000</h3>
+  <div class="formula">
+    <div class="step">
+      Nb ≥ log<sub>2</sub>(30.001) ≈ 14,87
+      <span class="arr">→</span> <strong>Nb = 15 bits</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S5 ══ -->
+<section id="s5">
+  <h2><span class="sn">05</span>Inteiros Binários Sinalizados</h2>
+
+  <h3>Características</h3>
+  <p>Um inteiro sinalizado usa o <strong>bit mais significativo (MSB)</strong> como bit de sinal:</p>
+  <ul>
+    <li><strong>MSB = 0</strong> → número positivo ou zero. A representação é idêntica ao modo não sinalizado.</li>
+    <li><strong>MSB = 1</strong> → número negativo. A representação segue o <strong>complemento de 2</strong>.</li>
+  </ul>
+
+  <div class="box box-teal">
+    <strong>Complemento de 2 — regra prática</strong><br>
+    Para obter o negativo de um número positivo: <em>inverta todos os bits e some 1</em>.<br>
+    Exemplo (3 bits): +3 = <code>011</code> → inverte → <code>100</code> → +1 → <code>101</code> = −3 ✓
+  </div>
+
+  <h3>Diagrama de relógio — complemento de 2</h3>
+  <p>O círculo abaixo representa todos os valores de Nb bits dispostos como um relógio. Positivos à direita (verde), negativos à esquerda (laranja), Vmin em âmbar. A linha vermelha tracejada é o ponto de <em>overflow</em> — onde somar 1 ao maior positivo "vira" o maior negativo.</p>
+
+  <div class="diagram">
+    <div class="dtitle">Representação circular — complemento de 2 (interativo)</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:14px">
+      <button class="clk-btn" id="b2" onclick="draw(2)">2 bits</button>
+      <button class="clk-btn on" id="b3" onclick="draw(3)">3 bits</button>
+      <button class="clk-btn" id="b4" onclick="draw(4)">4 bits</button>
+    </div>
+    <svg id="sv" width="100%" viewBox="0 0 680 500">
+      <g id="sg"></g><g id="lb"></g><g id="ct"></g><g id="an"></g>
+    </svg>
+    <div id="clk-ib">Clique em qualquer segmento para ver detalhes.</div>
+  </div>
+
+  <h3>Limites do inteiro sinalizado</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Nb</th><th>Nc = 2<sup>Nb</sup></th><th>Vmin</th><th>Vmax</th></tr></thead>
+      <tbody>
+        <tr><td>2 bits</td><td>4</td><td>−2</td><td>1</td></tr>
+        <tr><td>3 bits</td><td>8</td><td>−4</td><td>3</td></tr>
+        <tr><td>8 bits</td><td>256</td><td>−128</td><td>127</td></tr>
+        <tr><td>16 bits</td><td>65.536</td><td>−32.768</td><td>32.767</td></tr>
+        <tr><td>32 bits</td><td>4.294.967.296</td><td>−2.147.483.648</td><td>2.147.483.647</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula">
+    <span class="fl">Fórmulas gerais — inteiro sinalizado</span>
+    Nc &nbsp;= 2<sup>Nb</sup><br>
+    Vmax = 2<sup>Nb−1</sup> − 1<br>
+    Vmin = −2<sup>Nb−1</sup> &nbsp;= −(Vmax + 1)
+  </div>
+
+  <div class="box box-coral">
+    <strong>Assimetria de Vmin e Vmax</strong><br>
+    |Vmin| = Vmax + 1: há sempre um negativo a mais do que positivos. Com 3 bits: Vmax = 3, mas Vmin = −4. O complemento de 2 de Vmin é ele mesmo (caso especial).
+  </div>
+
+  <h3>Número mínimo de bits para inteiro sinalizado</h3>
+  <div class="formula">
+    <span class="fl">Para N positivo</span>
+    <div class="step">Nb ≥ log<sub>2</sub>(N + 1) + 1</div>
+    <br>
+    <span class="fl">Para N negativo</span>
+    <div class="step">Nb ≥ log<sub>2</sub>(−N) + 1</div>
+    <br>
+    <span style="font-size:.85em;color:var(--text3)">O "+1" reserva o bit de sinal. Arredondar para cima.</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S6 ══ -->
+<section id="s6">
+  <h2><span class="sn">06</span>Aritmética em Base Binária</h2>
+
+  <h3>Soma</h3>
+  <div class="vlinks">
+    <a class="vlink" href="http://bit.ly/scfbinadd">Somador binário de madeira</a>
+  </div>
+
+  <div class="formula">
+    <span class="fl">Tabela de soma de 1 bit (half adder)</span>
+    0 + 0 = 0<br>
+    0 + 1 = 1<br>
+    1 + 0 = 1<br>
+    1 + 1 = 0 &nbsp;<span style="font-size:.85em;color:var(--text3)">(carry = 1)</span>
+  </div>
+
+  <h3>Subtração com Complemento de 2</h3>
+  <p>Em vez de hardware de subtração separado, converte-se A − B em <strong>A + (−B)</strong>, obtendo −B pelo complemento de 2. O mesmo somador é reutilizado — essa é a razão pela qual CPUs usam complemento de 2.</p>
+
+  <div class="box box-teal">
+    <strong>Procedimento A − B:</strong><br>
+    1. Calcule o complemento de 2 de B: inverta todos os bits e some 1.<br>
+    2. Some com A usando aritmética binária normal.<br>
+    3. Descarte o carry final (se o resultado estiver dentro do intervalo representável).
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S7 ══ -->
+<section id="s7">
+  <h2><span class="sn">07</span>Operações Bitwise</h2>
+
+  <p>Operam bit a bit sobre a representação binária de inteiros, sem interpretar sinal.</p>
+
+  <div class="opg">
+    <div class="opc"><div class="op">AND</div><div class="ol">&amp; — ambos 1 → 1</div></div>
+    <div class="opc"><div class="op">OR</div><div class="ol">| — ao menos 1 → 1</div></div>
+    <div class="opc"><div class="op">XOR</div><div class="ol">^ — exatamente 1 → 1</div></div>
+    <div class="opc"><div class="op">NOT</div><div class="ol">~ — inverte todos</div></div>
+    <div class="opc"><div class="op">&lt;&lt;</div><div class="ol">shift à esquerda</div></div>
+    <div class="opc"><div class="op">&gt;&gt;</div><div class="ol">shift à direita</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S8 ══ -->
+<section id="s8">
+  <h2><span class="sn">08</span>Propriedades dos Números Binários</h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Propriedade</th><th>Regra</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Paridade (par / ímpar)</td>
+          <td>LSB = 0 → par &nbsp;|&nbsp; LSB = 1 → ímpar</td>
+          <td><code>1010</code><sub>2</sub> = 10 (par); <code>1011</code><sub>2</sub> = 11 (ímpar)</td>
+        </tr>
+        <tr>
+          <td>Multiplicação por 2</td>
+          <td>Deslocamento à esquerda <code>&lt;&lt; 1</code></td>
+          <td><code>0011</code> (3) → <code>0110</code> (6)</td>
+        </tr>
+        <tr>
+          <td>Divisão inteira por 2</td>
+          <td>Deslocamento à direita <code>&gt;&gt; 1</code></td>
+          <td><code>0110</code> (6) → <code>0011</code> (3)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S9 ══ -->
+<section id="s9">
+  <h2><span class="sn">09</span>Grandezas em Computação</h2>
+
+  <p>Unidades básicas: <strong>BIT</strong>, <strong>BYTE</strong> (8 bits), <strong>WORD</strong>, <strong>DWORD</strong>, <strong>QWORD</strong>.</p>
+  <p>Existem dois sistemas de prefixos — e a confusão entre eles explica por que um pendrive ou HD parece "menor" do que o anunciado.</p>
+
+  <h3>Sistema Internacional (SI) — Base Decimal</h3>
+  <p>Uso: velocidade de internet, HDs, SSDs e especificações comerciais de hardware.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Prefixo</th><th>Bit (b)</th><th>Byte (B)</th><th>Valor (Base 10)</th></tr></thead>
+      <tbody>
+        <tr><td>kilo (k)</td><td>kb</td><td>kB</td><td>10<sup>3</sup> = 1.000</td></tr>
+        <tr><td>mega (M)</td><td>Mb</td><td>MB</td><td>10<sup>6</sup> = 1.000.000</td></tr>
+        <tr><td>giga (G)</td><td>Gb</td><td>GB</td><td>10<sup>9</sup> = 1.000.000.000</td></tr>
+        <tr><td>tera (T)</td><td>Tb</td><td>TB</td><td>10<sup>12</sup></td></tr>
+        <tr><td>peta (P)</td><td>Pb</td><td>PB</td><td>10<sup>15</sup></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Sistema IEC — Base Binária</h3>
+  <p>Uso: memória RAM, cache de processador, sistemas operacionais (ex: Windows).</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Prefixo</th><th>Bit (b)</th><th>Byte (B)</th><th>Valor (Base 2)</th></tr></thead>
+      <tbody>
+        <tr><td>kibi (Ki)</td><td>Kib</td><td>KiB</td><td>2<sup>10</sup> = 1.024</td></tr>
+        <tr><td>mebi (Mi)</td><td>Mib</td><td>MiB</td><td>2<sup>20</sup> = 1.048.576</td></tr>
+        <tr><td>gibi (Gi)</td><td>Gib</td><td>GiB</td><td>2<sup>30</sup> = 1.073.741.824</td></tr>
+        <tr><td>tebi (Ti)</td><td>Tib</td><td>TiB</td><td>2<sup>40</sup></td></tr>
+        <tr><td>pebi (Pi)</td><td>Pib</td><td>PiB</td><td>2<sup>50</sup></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Exemplo real — embalagem SanDisk Ultra Dual Drive Go</h3>
+  <p>A embalagem de um pendrive SanDisk traz, em letras miúdas (texto original em inglês):</p>
+  <blockquote>
+    * 1GB = 1,000,000,000 bytes. Actual user storage less.<br>
+    ** Read speeds up to 150MB/s. Write speeds lower and vary by capacity. USB Type-C with USB 3.1, Gen. 1/USB 3.0 support required. Based on internal testing; performance may be lower depending upon host device, interface, usage conditions and other factors. 1MB = 1,000,000 bytes.<br>
+    <small>Download and installation required; see www.sandiskmemoryzone.com. Smartphone or tablet with On-The-Go (OTG) support required. See www.sandisk.com/dualdrive-c for list of compatible devices. Compatible with most Android™ devices. ✔ Windows® 7 &nbsp; ✔ Windows 8.</small>
+  </blockquote>
+
+  <div class="box box-amber">
+    <strong>Por que o pendrive de "128 GB" aparece com menos espaço no Windows?</strong><br>
+    O fabricante usa SI: 1 GB = 10<sup>9</sup> bytes. O Windows exibe em GiB (IEC): 1 GiB = 2<sup>30</sup> ≈ 1,074 × 10<sup>9</sup> bytes. Um disco de 128 GB (SI) equivale a
+    128 × 10<sup>9</sup> / 2<sup>30</sup> ≈ <strong>119,2 GiB</strong> — exatamente o que o sistema operacional reporta.
+    Não é engano do fabricante: são dois sistemas diferentes de prefixos.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ S10 ══ -->
+<section id="s10">
+  <h2><span class="sn">10</span>Exercícios</h2>
+  <p style="font-family:var(--sans);font-size:14px;color:var(--text2);margin-bottom:1rem">
+    Os exercícios a–i são conversões e operações; j–k são atividades de programação em Python.
+  </p>
+
+  <ul class="exl">
+    <li><span class="el">a)</span><span class="ec">100111<sub>2</sub> &nbsp;→ &nbsp;______<sub>10</sub></span></li>
+    <li><span class="el">b)</span><span class="ec">1AFB<sub>16</sub> &nbsp;→ &nbsp;______<sub>10</sub></span></li>
+    <li><span class="el">c)</span><span class="ec">1972<sub>10</sub> &nbsp;→ &nbsp;______<sub>h</sub></span></li>
+    <li><span class="el">d)</span><span class="ec">372<sub>10</sub> &nbsp;→ &nbsp;______<sub>2</sub></span></li>
+    <li><span class="el">e)</span><span class="ec">1011101<sub>2</sub> &nbsp;→ &nbsp;______<sub>h</sub></span></li>
+    <li><span class="el">f)</span><span class="ec">1AAF2BC<sub>16</sub> &nbsp;→ &nbsp;______<sub>2</sub></span></li>
+    <li><span class="el">g)</span><span class="ec">10111<sub>2</sub> + 101<sub>2</sub> = ?</span></li>
+    <li><span class="el">h)</span><span class="ec">11111<sub>2</sub> + 1000001<sub>2</sub> = ?</span></li>
+    <li><span class="el">i)</span><span class="ec">1BBB<sub>16</sub> + BABAC1<sub>16</sub> = ?</span></li>
+    <li class="prog"><span class="el">j)</span><span class="ec">Fazer um programa em Python que converta um número decimal para base 16.</span></li>
+    <li class="prog"><span class="el">k)</span><span class="ec">Fazer um programa Python que converta um número de três dígitos para decimal. O programa deve pedir a base de entrada ao usuário.</span></li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════ S11 ══ -->
+<section id="s11">
+  <h2><span class="sn">11</span>Citações</h2>
+
+  <blockquote>
+    Ouça seriamente tudo o que seus filhos quiserem lhe dizer, seja lá o que for. Se você não ouvir com atenção as coisinhas que dizem quando pequenos, eles não vão lhe contar as coisas importantes quando forem grandes — porque, para eles, tudo sempre foi importante.
+    <footer>— Catherine M. Wallace, crítica literária e historiadora americana</footer>
+  </blockquote>
+
+  <blockquote>
+    De todos os títulos que tive o privilégio de ganhar, "pai" sempre foi o melhor.
+    <footer>— Ken Norton, pugilista americano</footer>
+  </blockquote>
+</section>
+
+</main>
+
+<!-- ══════════════════════ Interactive Clock JS ══════════════════════ -->
+<script>
+const CX=340,CY=248,RI=50,RO=165,RL=107;
+const FC={z:'#888780',p:'#1D9E75',n:'#D85A30',m:'#BA7517'};
+const NS='http://www.w3.org/2000/svg';
+
+function rad(d){return d*Math.PI/180}
+
+function mk(tag,attrs,par){
+  const e=document.createElementNS(NS,tag);
+  Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));
+  if(par)par.appendChild(e);
+  return e;
+}
+function tx(text,attrs,par){
+  const e=mk('text',attrs,par);
+  e.textContent=text;
+  return e;
+}
+function segPath(i,N,ri,ro){
+  const sw=360/N,g=0.018;
+  const a0=rad(-90+i*sw)+g,a1=rad(-90+(i+1)*sw)-g;
+  const lf=sw>180?1:0;
+  const ox0=CX+ro*Math.cos(a0),oy0=CY+ro*Math.sin(a0);
+  const ox1=CX+ro*Math.cos(a1),oy1=CY+ro*Math.sin(a1);
+  const ix1=CX+ri*Math.cos(a1),iy1=CY+ri*Math.sin(a1);
+  const ix0=CX+ri*Math.cos(a0),iy0=CY+ri*Math.sin(a0);
+  return `M${ox0},${oy0}A${ro},${ro} 0 ${lf} 1 ${ox1},${oy1}L${ix1},${iy1}A${ri},${ri} 0 ${lf} 0 ${ix0},${iy0}Z`;
+}
+function col(d,N){return d===0?FC.z:d===-(N>>1)?FC.m:d>0?FC.p:FC.n}
+
+function clearG(id){const g=document.getElementById(id);while(g.firstChild)g.removeChild(g.firstChild)}
+
+function draw(nb){
+  const N=1<<nb;
+  ['sg','lb','ct','an'].forEach(clearG);
+  const sg=document.getElementById('sg'),lb=document.getElementById('lb');
+
+  for(let i=0;i<N;i++){
+    const dec=i<(N>>1)?i:i-N;
+    const bin=i.toString(2).padStart(nb,'0');
+    const ma=rad(-90+(i+0.5)*(360/N));
+    const lx=CX+RL*Math.cos(ma),ly=CY+RL*Math.sin(ma);
+    const fill=col(dec,N);
+    const fs=nb<=3?12:9,fd=nb<=3?13:10,off=nb===2?10:nb===3?7:5;
+
+    const p=mk('path',{d:segPath(i,N,RI,RO),fill,stroke:'var(--bg)','stroke-width':'1.5','data-i':i},sg);
+    p.style.cursor='pointer';
+    p.addEventListener('click',()=>onCk(i,dec,bin,nb));
+
+    tx(bin,{x:lx,y:ly-off,'text-anchor':'middle','dominant-baseline':'central','font-size':fs,'font-weight':'500','fill':'#fff','font-family':'var(--mono)','pointer-events':'none'},lb);
+    tx(dec,{x:lx,y:ly+off,'text-anchor':'middle','dominant-baseline':'central','font-size':fd,'fill':'rgba(255,255,255,.9)','pointer-events':'none'},lb);
+  }
+
+  const ct=document.getElementById('ct');
+  mk('circle',{cx:CX,cy:CY,r:RI-2,fill:'var(--bg)',stroke:'var(--border)','stroke-width':'1'},ct);
+  tx(nb,{x:CX,y:CY-9,'text-anchor':'middle','dominant-baseline':'central','font-size':'18','font-weight':'500','fill':'var(--text)'},ct);
+  tx('bits',{x:CX,y:CY+10,'text-anchor':'middle','dominant-baseline':'central','font-size':'11','fill':'var(--text2)'},ct);
+
+  const an=document.getElementById('an');
+  const oa=rad(90);
+  const ox1=CX+(RI+4)*Math.cos(oa),oy1=CY+(RI+4)*Math.sin(oa);
+  const ox2=CX+(RO+20)*Math.cos(oa),oy2=CY+(RO+20)*Math.sin(oa);
+  mk('line',{x1:ox1,y1:oy1,x2:ox2,y2:oy2,stroke:'#E24B4A','stroke-width':'1.5','stroke-dasharray':'5 3'},an);
+  tx('overflow',{x:CX+7,y:oy2,'dominant-baseline':'central','font-size':'10','fill':'#E24B4A'},an);
+
+  tx('+',{x:CX+RO+18,y:CY,'text-anchor':'start','dominant-baseline':'central','font-size':'18','font-weight':'500','fill':FC.p,'opacity':'0.8'},an);
+  tx('−',{x:CX-RO-18,y:CY,'text-anchor':'end','dominant-baseline':'central','font-size':'18','font-weight':'500','fill':FC.n,'opacity':'0.8'},an);
+
+  const sy=CY+RO+40;
+  tx(`Nc = ${N}   ·   Vmax = +${(N>>1)-1}   ·   Vmin = ${-(N>>1)}`,
+    {x:CX,y:sy,'text-anchor':'middle','font-size':'12','fill':'var(--text3)'},an);
+
+  const ly2=sy+22;
+  [[FC.p,'positivo'],[FC.n,'negativo'],[FC.z,'zero'],[FC.m,'|Vmin| especial']].forEach(([c,l],i)=>{
+    const x=CX-200+i*105;
+    mk('rect',{x,y:ly2-5,width:10,height:10,rx:'2',fill:c},an);
+    tx(l,{x:x+14,y:ly2,'dominant-baseline':'central','font-size':'10','fill':'var(--text2)'},an);
+  });
+
+  [2,3,4].forEach(n=>document.getElementById('b'+n).classList.toggle('on',n===nb));
+  document.getElementById('clk-ib').innerHTML='Clique em qualquer segmento para ver detalhes.';
+}
+
+function onCk(i,dec,bin,nb){
+  const N=1<<nb;
+  let msg=`<span style="font-family:var(--mono);font-weight:600">${bin}</span> = <strong>${dec}</strong>&ensp;`;
+  if(dec===0){
+    msg+='Zero — bit de sinal = 0. Representação idêntica ao modo não sinalizado.';
+  } else if(dec===-(N>>1)){
+    msg+=`Vmin = ${dec}. Não tem par positivo com ${nb} bits! `
+        +`|Vmin| = ${-dec} > Vmax = ${(N>>1)-1}. `
+        +`Curiosidade: comp2(Vmin) = Vmin.`;
+  } else if(dec===(N>>1)-1){
+    msg+=`Vmax = +${dec}. Maior positivo representável com ${nb} bits sinalizados.`;
+  } else if(dec>0){
+    msg+='Positivo. Bit mais significativo = 0. Representação idêntica ao não sinalizado.';
+  } else {
+    const pos=-dec;
+    const pb=pos.toString(2).padStart(nb,'0');
+    const inv=pb.split('').map(b=>b==='0'?'1':'0').join('');
+    const res=(parseInt(inv,2)+1).toString(2).padStart(nb,'0');
+    msg+=`Negativo (complemento de 2). Bit mais significativo = 1.<br>`
+        +`<span style="font-family:var(--mono);font-size:11px;color:var(--text3)">`
+        +`+${pos} = ${pb} → inverte → ${inv} → +1 → <strong>${res}</strong> ✓`
+        +`</span>`;
+  }
+  document.getElementById('clk-ib').innerHTML=msg;
+  document.querySelectorAll('#sg path').forEach(p=>{
+    p.setAttribute('opacity',parseInt(p.getAttribute('data-i'))===i?'1':'0.38');
+  });
+}
+
+draw(3);
+</script>
+</body>
+</html>
